@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\OrderDetail;
+use App\Models\KitchenTask;
 
-class OrderDetailController extends Controller
+class KitchenTaskController extends Controller
 {
-    // Ambil semua data order detail
+    // Ambil semua data Kitchen Task
     public function index()
     {
-        return response()->json(OrderDetail::all(), 200);
+        return response()->json(KitchenTask::all(), 200);
     }
 
-    // Tambahkan order detail baru
+    // Tambahkan Kitchen Task baru
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -25,18 +25,18 @@ class OrderDetailController extends Controller
             'notes' => 'nullable|string',
         ]);
 
-        $orderDetail = OrderDetail::create($validated);
+        $kitchenTask = KitchenTask::create($validated);
 
-        return response()->json($orderDetail, 201);
+        return response()->json($kitchenTask, 201);
     }
 
     // Tampilkan detail berdasarkan order_detail_id
     public function show(string $id)
     {
-        $data = OrderDetail::find($id);
+        $data = KitchenTask::find($id);
 
         if (!$data) {
-            return response()->json(['message' => 'Order Detail not found'], 404);
+            return response()->json(['message' => 'Kitchen Task not found'], 404);
         }
 
         return response()->json($data, 200);
@@ -45,7 +45,7 @@ class OrderDetailController extends Controller
     // Tampilkan semua data berdasarkan nama chef
     public function getByChef(string $chef)
     {
-        $data = OrderDetail::where('chef', $chef)->get();
+        $data = KitchenTask::where('chef', $chef)->get();
 
         if ($data->isEmpty()) {
             return response()->json(['message' => 'No orders found for this chef'], 404);
@@ -54,13 +54,13 @@ class OrderDetailController extends Controller
         return response()->json($data, 200);
     }
 
-    // Update order detail
+    // Update Kitchen Task
     public function update(Request $request, string $id)
     {
-        $data = OrderDetail::find($id);
+        $data = KitchenTask::find($id);
 
         if (!$data) {
-            return response()->json(['message' => 'Order Detail not found'], 404);
+            return response()->json(['message' => 'Kitchen Task not found'], 404);
         }
 
         $validated = $request->validate([
@@ -77,17 +77,17 @@ class OrderDetailController extends Controller
         return response()->json($data, 200);
     }
 
-    // Hapus order detail
+    // Hapus Kitchen Task
     public function destroy(string $id)
     {
-        $data = OrderDetail::find($id);
+        $data = KitchenTask::find($id);
 
         if (!$data) {
-            return response()->json(['message' => 'Order Detail not found'], 404);
+            return response()->json(['message' => 'Kitchen Task not found'], 404);
         }
 
         $data->delete();
 
-        return response()->json(['message' => 'Order Detail deleted'], 200);
+        return response()->json(['message' => 'Kitchen Task deleted'], 200);
     }
 }

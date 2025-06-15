@@ -7,11 +7,15 @@ use App\Models\OrderDetail;
 
 class OrderDetailController extends Controller
 {
-    public function index() {
-        return OrderDetail::all();
+    // Ambil semua data order detail
+    public function index()
+    {
+        return response()->json(OrderDetail::all(), 200);
     }
 
-    public function store(Request $request) {
+    // Tambahkan order detail baru
+    public function store(Request $request)
+    {
         $validated = $request->validate([
             'order_id' => 'required|integer',
             'menu' => 'required|string',
@@ -21,21 +25,42 @@ class OrderDetailController extends Controller
             'notes' => 'nullable|string',
         ]);
 
-        return OrderDetail::create($validated);
+        $orderDetail = OrderDetail::create($validated);
+
+        return response()->json($orderDetail, 201);
     }
 
-    public function show(string $id) {
+    // Tampilkan detail berdasarkan order_detail_id
+    public function show(string $id)
+    {
         $data = OrderDetail::find($id);
+
         if (!$data) {
-            return response()->json(['message' => 'Data not found'], 404);
+            return response()->json(['message' => 'Order Detail not found'], 404);
         }
+
         return response()->json($data, 200);
     }
 
-    public function update(Request $request, string $id) {
+    // Tampilkan semua data berdasarkan nama chef
+    public function getByChef(string $chef)
+    {
+        $data = OrderDetail::where('chef', $chef)->get();
+
+        if ($data->isEmpty()) {
+            return response()->json(['message' => 'No orders found for this chef'], 404);
+        }
+
+        return response()->json($data, 200);
+    }
+
+    // Update order detail
+    public function update(Request $request, string $id)
+    {
         $data = OrderDetail::find($id);
+
         if (!$data) {
-            return response()->json(['message' => 'Data not found'], 404);
+            return response()->json(['message' => 'Order Detail not found'], 404);
         }
 
         $validated = $request->validate([
@@ -48,16 +73,21 @@ class OrderDetailController extends Controller
         ]);
 
         $data->update($validated);
+
         return response()->json($data, 200);
     }
 
-    public function destroy(string $id) {
+    // Hapus order detail
+    public function destroy(string $id)
+    {
         $data = OrderDetail::find($id);
+
         if (!$data) {
-            return response()->json(['message' => 'Data not found'], 404);
+            return response()->json(['message' => 'Order Detail not found'], 404);
         }
 
         $data->delete();
-        return response()->json(['message' => 'Deleted successfully'], 200);
+
+        return response()->json(['message' => 'Order Detail deleted'], 200);
     }
 }

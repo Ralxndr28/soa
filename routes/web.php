@@ -7,5 +7,6 @@ Route::get('/', function () {
     return view('pages.homepage');
 });
 
-
 Route::apiResource('order-details', OrderDetailController::class);
+// Tambahan khusus: filter berdasarkan chef
+Route::get('order-details/chef/{chef}', [OrderDetailController::class, 'getByChef']);

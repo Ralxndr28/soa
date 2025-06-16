@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up()
 {
-    Schema::create('order_details', function (Blueprint $table) {
-        $table->id('order_detail_id');
-        $table->unsignedBigInteger('order_id');
+    Schema::create('kitchen_tasks', function (Blueprint $table) {
+        $table->id('kitchen_task_id');
+        $table->unsignedBigInteger('kitchen_id');
         $table->string('menu');
         $table->integer('quantity');
         $table->string('chef')->nullable();
@@ -21,7 +21,7 @@ return new class extends Migration
         $table->text('notes')->nullable();
         $table->timestamps();
 
-        $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+        $table->foreign('kitchen_id')->references('id')->on('kitchens')->onDelete('cascade');
     });
 }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_details');
+        Schema::dropIfExists('kitchen_tasks');
     }
 };

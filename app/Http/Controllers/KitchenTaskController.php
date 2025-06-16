@@ -36,7 +36,7 @@ class KitchenTaskController extends Controller
         $data = KitchenTask::find($id);
 
         if (!$data) {
-            return response()->json(['message' => 'Kitchen Task not found'], 404);
+            return response()->json(['message' => 'KitchenTask not found'], 404);
         }
 
         return response()->json($data, 200);

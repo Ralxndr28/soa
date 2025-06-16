@@ -9,7 +9,9 @@ class KitchenTask extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'order_detail_id';
+    protected $primaryKey = 'kitchen_task_id';
+
+    protected $table = 'kitchen_tasks';
 
     protected $fillable = [
         'order_id', 'menu', 'quantity', 'chef', 'status', 'notes'

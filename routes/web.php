@@ -8,4 +8,4 @@ Route::get('/', function () {
 });
 
 
-Route::apiResource('order-details', KitchenTaskController::class);
+Route::apiResource('kitchen-tasks', KitchenTaskController::class);
